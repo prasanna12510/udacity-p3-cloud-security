@@ -1,0 +1,28 @@
+Based on the architecture diagram, and the steps you have taken so far to upload data and access the application web service, identify at least 2 obvious poor practices as it relates to security.  Include justification.
+
+# Poor practice 1
+The Web Service Instance is in the public subnet, has port 5000 open to the internet, and no HTTPS port 443 open.
+Instead, the instance should be in the private subnet in order not to be exposed to the internet, use port 443 instead of port 80, and only allow communication on port 5000 from the AppLoadBalancerSG.
+The DefaultPrivateRoute1 and DefaultPrivateRoute2 tables have DestinationCidrBlock: 0.0.0.0/0
+That means if a resource within the private subnets gets under malicious control, it could communicate with any endpoint on the internet.
+
+# Poor practice 2
+The InstanceRolePolicy-C3 for the IAM InstanceRole allows for S3 actions on any resource.
+That means the IAM role could be used to access and change content in any S3 bucket in the AWS account.
+
+
+aws cloudformation create-stack --region us-east-1 --stack-name c3-app --template-body file://starter/c3-app.yml --parameters ParameterKey=KeyPair,ParameterValue=cand-p3-security --capabilities CAPABILITY_IAM
+
+
+aws s3 cp free_recipe.txt s3://cand-c3-free-recipes-368924484491/ --region us-east-1
+
+aws s3 cp secret_recipe.txt s3://cand-c3-secret-recipes-368924484491/ --region us-east-1
+
+# view the files in the secret recipes bucket
+aws s3 ls  s3://cand-c3-secret-recipes-368924484491/ --region us-east-1
+
+# download the files
+aws s3 cp s3://cand-c3-secret-recipes-368924484491/secret_recipe.txt  .  --region us-east-1
+
+# view contents of the file
+cat secret_recipe.txt

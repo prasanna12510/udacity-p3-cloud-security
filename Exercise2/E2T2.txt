@@ -1,0 +1,30 @@
+Following are the security vulnerabilities:-
+
+1. The use of a non-root account is not enforced.
+2. The IAM password policy is not specified.
+3. CloudTrail Trail is not specified.
+3. Loadbalancer does not have HTTP->HTTPS redirection
+4. IAM policy  allowing '*' full administrative rights.
+5. VPC Security Groups allow all ingress and egress traffic which violates the AWS recommendation.
+6. Process 'sshd' is listening on port 22 on the EC2 instance.
+7. TCP port 5000 is reachable from the internet on the EC2 instance.
+8. S3 bucket logging not enabled.
+
+recommendations:
+1. Set IAM policies for not allowing root user and to enforce MFA.
+2. Specify a more rigorous IAM password policy.
+3. Create a CloudTrail that is stored on S3.
+4. Limit the traffic on the Loadbalancer, redirecting HTTP to HTTPS requests and also add default rule if rule doesnt match.
+5. specify more granular IAM policy like what are the resources that will be accessing as well as the specific permissions.
+6. Limit the traffic on the Security Groups only allow 80 and 443 as well as reference the other security group for accessing AWS resource within VPC.
+7. Close port 22 and all other non-necessary ports on the EC2 instance.
+8. Enable S3 bucket logging.
+9. Enable WAF on Loadbalancer to terminate or prevent from malicious attack
+
+
+Deliverables:
+
+E2T2_config.png - Screenshot of AWS Config showing non-compliant rules.
+E2T2_inspector.png - Screenshot of AWS Inspector showing scan results.
+E2T2_securityhub.png - Screenshot of AWS Security Hub showing compliance standards for CIS foundations.
+E2T2.txt - Provide recommendations on how to remediate the vulnerabilities.

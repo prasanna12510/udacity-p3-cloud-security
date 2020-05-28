@@ -1,0 +1,19 @@
+# Identify tools that will allow you to do the following:
+
+## Scan infrastructure as code templates
+Open Policy Agent / Regula
+
+### Example vulnerability
+Ingress from all IP addresses and ports (0.0.0.0/0)
+
+##Scan AMI’s or containers for OS vulnerabilities
+Ansible
+
+### Example vulnerability
+SSH root access with password logon.
+
+##Scan an AWS environment for cloud configuration vulnerabilities
+AWS Config
+
+### Example vulnerability
+EC2 instance hijacked and contacting servers on the internet.
